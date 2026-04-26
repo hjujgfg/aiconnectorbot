@@ -67,7 +67,8 @@ dp.message.outer_middleware(AuthMiddleware())
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
-    await message.answer(f"Hello, {html.bold(message.from_user.full_name)}! I'm your AI assistant. Use {html.code('/auth [passphrase]')} if you haven't yet.")
+    user_name = html.quote(message.from_user.full_name)
+    await message.answer(f"Hello, {html.bold(user_name)}! I'm your AI assistant. Use {html.code('/auth [passphrase]')} if you haven't yet.")
 
 @dp.message(Command("help"))
 async def command_help_handler(message: Message) -> None:
