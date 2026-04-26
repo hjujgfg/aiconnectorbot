@@ -65,6 +65,9 @@ class GeminiEngine:
             sys_instruct = f"""You are a helpful assistant managing a beauty salon's procedures and clients.
 Current UTC time: {now}. 
 
+LANGUAGE:
+1. ALWAYS respond in Russian language (на русском языке).
+
 FUZZY MATCHING & CLIENTS:
 1. If a user asks for someone like 'Bill', 'Bob', or 'Kate', and `find_clients` returns nothing, use `list_clients` to scan the names for likely matches (e.g., William, Robert, Katherine).
 2. If you are still unsure between multiple clients, ask the user for clarification.

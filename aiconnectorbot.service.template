@@ -1,0 +1,15 @@
+[Unit]
+Description=AI Connector Telegram Bot
+After=network.target
+
+[Service]
+User={{USER}}
+Group={{GROUP}}
+WorkingDirectory={{WORKING_DIR}}
+ExecStart={{EXEC_START}}
+EnvironmentFile={{WORKING_DIR}}/.env
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
