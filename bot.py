@@ -102,19 +102,23 @@ async def command_reset_handler(message: Message) -> None:
 @dp.message()
 async def ai_handler(message: Message) -> None:
     """
-    Pass the user message to Gemini and return the response
+    Pass the user message to Gemini and return the response with immediate feedback
     """
     if not message.text:
         return
 
+    # Send placeholder message instantly
+    placeholder = await message.answer("🤔 Думаю...")
+
     async with ChatActionSender.typing(bot=message.bot, chat_id=message.chat.id):
         response_text = await ai.ask(message.from_user.id, message.text)
-        # Try to use MarkdownV2 for cleaner output if AI returns markdown
+        
+        # Update the placeholder with the actual response
         try:
-            await message.answer(response_text, parse_mode=ParseMode.MARKDOWN)
+            await placeholder.edit_text(response_text, parse_mode=ParseMode.MARKDOWN)
         except Exception:
-            # Fallback to no parse mode if markdown is malformed
-            await message.answer(response_text, parse_mode=None)
+            # Fallback for malformed markdown or empty responses
+            await placeholder.edit_text(response_text, parse_mode=None)
 
 async def main() -> None:
     if not TOKEN:
